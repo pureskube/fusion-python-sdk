@@ -14,13 +14,15 @@ on:
 
 jobs:
   Tag:
-    if: github.event.pull_request.merged == true && contains(github.event.head.ref, 'release')
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
     - env:
         EVENT_CONTEXT: ${{ toJSON(github.event) }}
       run: |
         echo $EVENT_CONTEXT
+
+    - run:  echo ${{ contains(github.event.pull_request.head.ref, 'release') }}
 
     - run: |
         BRANCH=${{ github.event.head.ref }}
