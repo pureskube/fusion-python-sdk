@@ -25,7 +25,7 @@ jobs:
     - run:  echo ${{ contains(github.event.pull_request.head.ref, 'release') }}
 
     - run: |
-        BRANCH=${{ github.event.head.ref }}
+        BRANCH=${{ github.event.pull_request.head.ref }}
         echo The PR was merged from branch $BRANCH
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
 
