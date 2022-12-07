@@ -14,15 +14,13 @@ on:
 
 jobs:
   Tag:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.head.ref, 'release')
     runs-on: ubuntu-22.04
     steps:
     - env:
         EVENT_CONTEXT: ${{ toJSON(github.event) }}
       run: |
         echo $EVENT_CONTEXT
-
-    - run:  echo ${{ contains(github.event.pull_request.head.ref, 'release') }}
 
     - run: |
         BRANCH=${{ github.event.pull_request.head.ref }}
@@ -32,3 +30,4 @@ jobs:
     - run: |
         VERSION=v${TEST#release_*}
         echo Will tag $VERSION
+        git tag $VERSION
